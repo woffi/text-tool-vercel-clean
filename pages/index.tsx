@@ -26,7 +26,7 @@ export default function Home() {
       <h1>Text-Tool</h1>
       <select value={task} onChange={(e) => setTask(e.target.value)}>
         <option value="summary">Zusammenfassen</option>
-        <option value="translate">Übersetzen DE<>ENG</option>
+        <option value="translate">Übersetzen DE-ENG</option>
         <option value="simplify">Vereinfachen</option>
       </select>
       <button onClick={handleClick}>Start</button>
