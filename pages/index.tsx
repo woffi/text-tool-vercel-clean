@@ -7,7 +7,7 @@ export default function Home() {
   const [task, setTask] = useState("summary");
   const prompts = {
     summary: "Fasse den folgenden Text kurz und prägnant zusammen:",
-    translate: "Übersetze den folgenden Text ins Englische:",
+    translate: "Übersetze den folgenden Text ins Englische, wenn er auf Deutsch ist, sonst auf Deutsch, wenn er Englisch ist",
     simplify: "Schreibe den folgenden Text verständlicher um:"
   };
 
@@ -26,7 +26,7 @@ export default function Home() {
       <h1>Text-Tool</h1>
       <select value={task} onChange={(e) => setTask(e.target.value)}>
         <option value="summary">Zusammenfassen</option>
-        <option value="translate">Übersetzen</option>
+        <option value="translate">Übersetzen DE<>ENG</option>
         <option value="simplify">Vereinfachen</option>
       </select>
       <button onClick={handleClick}>Start</button>
