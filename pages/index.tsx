@@ -14,15 +14,21 @@ export default function Home() {
 
   const handleClick = async () => {
     setLoading(true);
-    const res = await fetch("/api/gpt", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: `${prompts[task]}\n\n${input}` })
+    const res = await fetch('/api/gpt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }),
     });
+    
     const data = await res.json();
-    setOutput(data.result || "Fehler.");
-    setLoading(false);
-  };
+    
+    if (!res.ok) {
+      setOutput(`Fehler: ${data.error || 'Unbekannt'}`);
+    } else {
+      setOutput(data.result);
+    }
 
   const handleCopy = () => {
     navigator.clipboard.writeText(output);
