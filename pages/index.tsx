@@ -12,27 +12,31 @@ export default function Home() {
     simplify: "Schreibe den folgenden Text verständlicher um:"
   };
 
-  const handleClick = async () => {
-    setLoading(true);
-    const res = await fetch('/api/gpt', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ prompt }),
-    });
-    
-    const data = await res.json();
-    
-    if (!res.ok) {
-      setOutput(`Fehler: ${data.error || 'Unbekannt'}`);
-    } else {
-      setOutput(data.result);
-    }
+const handleClick = async () => {
+  setLoading(true);
+  const prompt = `${prompts[task]}\n\n${input}`;
+  const res = await fetch('/api/gpt', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ prompt }),
+  });
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(output);
-  };
+  const data = await res.json();
+
+  if (!res.ok) {
+    setOutput(`Fehler: ${data.error || 'Unbekannt'}`);
+  } else {
+    setOutput(data.result);
+  }
+
+  setLoading(false);
+}; // <–– Diese schließende Klammer hat gefehlt
+
+const handleCopy = () => {
+  navigator.clipboard.writeText(output);
+};
 
   return (
     <div style={{ padding: 20, backgroundColor: "#002b40", minHeight: "100vh", fontFamily: "Futura, sans-serif" }}>
