@@ -8,7 +8,7 @@ export default function Home() {
 
   const prompts = {
     summary: "Fasse den folgenden Text kurz und prägnant zusammen:",
-    translate: "Übersetze den folgenden Text ins Englische:",
+    translate: "Übersetze den folgenden Text ins Englische, wenn er auf Deutsch ist, sonst übersetze ihn ins Deutsche:",
     simplify: "Schreibe den folgenden Text verständlicher um:"
   };
 
