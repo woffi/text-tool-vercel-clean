@@ -53,7 +53,7 @@ const handleCopy = () => {
 
       <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
         {/* Linke Spalte */}
-        <div style={{ width: "50%", display: "flex", flexDirection: "column", height: 340 }}>
+        <div style={{ width: "50%", display: "flex", flexDirection: "column", height: 700 }}>
           <div style={{ height: 40 }}></div>
           <textarea
             value={input}
@@ -64,7 +64,7 @@ const handleCopy = () => {
         </div>
 
         {/* Rechte Spalte */}
-        <div style={{ width: "50%", display: "flex", flexDirection: "column", height: 340 }}>
+        <div style={{ width: "50%", display: "flex", flexDirection: "column", height: 700 }}>
           <div style={{ height: 40, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{
               color: "red",
