@@ -40,7 +40,7 @@ const handleCopy = () => {
 
   return (
     <div style={{ padding: 20, backgroundColor: "#002b40", minHeight: "100vh", fontFamily: "Futura, sans-serif" }}>
-      <h1 style={{ color: "#66CDAA" }}>Text-Tool</h1>
+      <h1 style={{ color: "#66CDAA" }}>woffis KI-TextTool</h1>
 
       <div style={{ marginBottom: 10 }}>
         <select value={task} onChange={(e) => setTask(e.target.value)}>
