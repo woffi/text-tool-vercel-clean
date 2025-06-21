@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>woffis KI-Texttool</title>
+        <title>woffis KI-TextTool</title>
         <meta name="description" content="Ein Tool zum Zusammenfassen, Übersetzen und Vereinfachen von Texten." />
       </Head>
       <div style={{ padding: 20, backgroundColor: "#002b40", minHeight: "100vh", fontFamily: "Futura, sans-serif" }}>
