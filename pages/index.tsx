@@ -17,11 +17,18 @@ export default function Home() {
   useEffect(() => {
     fetch("https://woffi.de/assets/prompts.json")
       .then(res => res.json())
-      .then(data => {
-        setPrompts(data);
-        if (data.length > 0) setTask(data[0].key);
+      .then((data: PromptItem[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setPrompts(data);
+          setTask(data[0].key);
+        } else {
+          console.error("Leere oder ungültige prompts.json");
+        }
       })
-      .catch(() => setPrompts([]));
+      .catch(err => {
+        console.error("Fehler beim Laden der prompts.json:", err);
+        setPrompts([]);
+      });
   }, []);
 
   const handleClick = async () => {
@@ -29,20 +36,24 @@ export default function Home() {
     const selected = prompts.find(p => p.key === task);
     const fullPrompt = `${selected?.text ?? ""}\n\n${input}`;
 
-    const res = await fetch('/api/gpt', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ prompt: fullPrompt }),
-    });
+    try {
+      const res = await fetch('/api/gpt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: fullPrompt }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      setOutput(`Fehler: ${data.error || 'Unbekannt'}`);
-    } else {
-      setOutput(data.result);
+      if (!res.ok) {
+        setOutput(`Fehler: ${data.error || 'Unbekannt'}`);
+      } else {
+        setOutput(data.result);
+      }
+    } catch (err: any) {
+      setOutput(`Fehler: ${err.message || 'Unbekannter Fehler'}`);
     }
 
     setLoading(false);
