@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useState } from "react";
 
 export default function Home() {
@@ -39,6 +40,10 @@ const handleCopy = () => {
 };
 
   return (
+    <Head>
+      <title>woffis KI-Texttool</title>
+      <meta name="description" content="Ein Tool zum Zusammenfassen, Übersetzen und Vereinfachen von Texten." />
+    </Head>
     <div style={{ padding: 20, backgroundColor: "#002b40", minHeight: "100vh", fontFamily: "Futura, sans-serif" }}>
       <h1 style={{ color: "#66CDAA" }}>woffis KI-TextTool</h1>
 
