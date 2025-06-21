@@ -1,40 +1,51 @@
 import Head from 'next/head';
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+
+type PromptItem = {
+  key: string;
+  label: string;
+  text: string;
+};
 
 export default function Home() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  const [task, setTask] = useState("summary");
+  const [task, setTask] = useState("");
   const [loading, setLoading] = useState(false);
-  const [prompts, setPrompts] = useState<{ [key: string]: string }>({});
+  const [prompts, setPrompts] = useState<PromptItem[]>([]);
 
   useEffect(() => {
-    fetch("https://woffi.de/assets/prompts.json")
-      .then((res) => res.json())
-      .then((data) => setPrompts(data))
-      .catch((err) => console.error("Fehler beim Laden der Prompts:", err));
+    fetch("https://woffi.de/media/prompts.json")
+      .then(res => res.json())
+      .then(data => {
+        setPrompts(data);
+        if (data.length > 0) setTask(data[0].key);
+      })
+      .catch(() => setPrompts([]));
   }, []);
 
   const handleClick = async () => {
     setLoading(true);
-    const prompt = `${prompts[task] || "Ungültiger Prompt"}\n\n${input}`;
+    const selected = prompts.find(p => p.key === task);
+    const fullPrompt = `${selected?.text ?? ""}\n\n${input}`;
 
     const res = await fetch('/api/gpt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ prompt: fullPrompt }),
     });
 
     const data = await res.json();
-    setLoading(false);
 
     if (!res.ok) {
       setOutput(`Fehler: ${data.error || 'Unbekannt'}`);
     } else {
       setOutput(data.result);
     }
+
+    setLoading(false);
   };
 
   const handleCopy = () => {
@@ -52,15 +63,15 @@ export default function Home() {
 
         <div style={{ marginBottom: 10 }}>
           <select value={task} onChange={(e) => setTask(e.target.value)}>
-            {Object.entries(prompts).map(([key, label]) => (
-              <option key={key} value={key}>{label}</option>
+            {prompts.map(p => (
+              <option key={p.key} value={p.key}>{p.label}</option>
             ))}
           </select>
           <button onClick={handleClick} style={{ marginLeft: 10 }}>Start</button>
         </div>
 
         <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-          {/* Linke Spalte */}
+          {/* Eingabe */}
           <div style={{ width: "50%", display: "flex", flexDirection: "column", height: 700 }}>
             <div style={{ height: 40 }}></div>
             <textarea
@@ -71,7 +82,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Rechte Spalte */}
+          {/* Ausgabe */}
           <div style={{ width: "50%", display: "flex", flexDirection: "column", height: 700 }}>
             <div style={{ height: 40, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span style={{
