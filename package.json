@@ -1,5 +1,5 @@
 {
-  "name": "text-tool-vercel-clean",
+  "name": "woffi's KI-TextTool",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
