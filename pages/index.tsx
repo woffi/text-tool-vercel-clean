@@ -15,6 +15,7 @@ export default function Home() {
   const [prompts, setPrompts] = useState<PromptItem[]>([]);
 
   useEffect(() => {
+    console.log("Fetching prompts...");  
     fetch("https://woffi.de/assets/prompts.json")
       .then(res => res.json())
       .then((data: PromptItem[]) => {
