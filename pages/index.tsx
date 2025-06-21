@@ -40,6 +40,7 @@ const handleCopy = () => {
 };
 
   return (
+    <>
     <Head>
       <title>woffis KI-Texttool</title>
       <meta name="description" content="Ein Tool zum Zusammenfassen, Übersetzen und Vereinfachen von Texten." />
@@ -97,5 +98,6 @@ const handleCopy = () => {
         }
       `}</style>
     </div>
+    </>
   );
 }
